@@ -13,7 +13,12 @@ module.exports = {
   },
   compilers: {
     solc: {
-      version: "0.6.0"
+      version: "0.6.2",
+      optimizer: {
+        enabled: true,
+        runs: 1000
+      },
+      evmVersion: "homestead"
     }
   }
 };
