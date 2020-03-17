@@ -55,7 +55,7 @@ truffle migrate -reset --network=network_name
 
 To run the test written for the contracts
 ```
-truffle test
+truffle test -reset --network=network_name
 ```
 
 ## Drivers List:
