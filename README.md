@@ -13,6 +13,7 @@ Tools needed
 1. Truffle Framework >= 5.1.17 ( npm install -g truffle )
 2. Ganache Tool ( link: https://www.trufflesuite.com/ganache )
 3. Solidity Compiler >= 0.6.0
+4. Dotenv ( npm install --save dotenv )
 4. Text Editor (vs code)
 
 ### Installing
@@ -38,9 +39,18 @@ To compile the smart contracts
 truffle compile
 ```
 
-To deploy the contract on blockchain. Before migrating, do ensure that either ganache(local blockchain) is running or select an ethereum testnet(rinkeby etc.) blockchain. To use testnet, make suitable changes in `truffle-config.js` network object.
+Before migrating, do ensure that either ganache(local blockchain) is running or select an ethereum testnet(rinkeby etc.) blockchain. 
+
+To use any testnet, add that testnet in `truffle-config.js` network object. Testnet have API_KEY and require MNEMONIC (for account). Create a `.env` file with the following values:
+
 ```
-truffle migrate
+MNEMONIC="12 words"
+API_KEY=api_key
+```
+
+To deploy the contract on blockchain. 
+```
+truffle migrate -reset --network=network_name
 ```
 
 To run the test written for the contracts
