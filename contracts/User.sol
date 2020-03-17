@@ -45,10 +45,8 @@ contract User is UserInterface, CarPoolingToken, Vehicle {
         _;
     }
 
-    function store(UserInterface.User memory _user)
-        public
-        override
-    {
+    function store(UserInterface.User memory _user) public override {
+        require(!AddressAvailable[msg.sender], "Address not available");
         require(idVerification(_user.adharID), "Id verification failed");
         UserList[msg.sender] = _user;
         AddressAvailable[msg.sender] = true;
@@ -80,12 +78,19 @@ contract User is UserInterface, CarPoolingToken, Vehicle {
         );
     }
 
-    function getUserDetails() public view returns (User memory user) {
-        require(AddressAvailable[msg.sender], "No such user");
+    function getUserDetails()
+        public
+        view
+        onlyRegisteredUser
+        returns (User memory user)
+    {
         return UserList[msg.sender];
     }
 
-    function addVehicle(VehicleInterface.Vehicle memory _vehicle) public {
+    function addVehicle(VehicleInterface.Vehicle memory _vehicle)
+        public
+        onlyRegisteredUser
+    {
         if (store(_vehicle) && getUserVehicleList().length == 1) {
             transfer(msg.sender, 200);
         }

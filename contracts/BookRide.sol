@@ -18,6 +18,7 @@ interface BookRideInterface {
         address rider;
         bookRideStatus status;
     }
+    event Message(string message, bookRide _user);
 }
 
 contract BookRideContract is BookRideInterface, OfferRideContract {
@@ -28,11 +29,7 @@ contract BookRideContract is BookRideInterface, OfferRideContract {
     uint256 internal bookRideId;
 
     // for rider
-    function addBookRide(bookRide memory _bookRide)
-        public
-        onlyRegisteredUser
-        onlyRider
-    {
+    function addBookRide(bookRide memory _bookRide) public onlyRegisteredUser {
         require(offerRideId >= _bookRide.oid, "No such offer ride exist");
         require(
             OfferRideList[_bookRide.oid].status == offerRideStatus.active,
@@ -57,6 +54,7 @@ contract BookRideContract is BookRideInterface, OfferRideContract {
         transferFrom(msg.sender, address(this), 20);
         UserOfferBookRideList[msg.sender][_bookRide.oid].push(bookRideId);
         UserList[msg.sender].utype = UserType.Rider;
+        emit Message("Booked ride successfully", BookRideList[bookRideId]);
         bookRideId++;
     }
 

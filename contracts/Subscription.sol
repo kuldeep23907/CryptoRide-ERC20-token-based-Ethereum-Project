@@ -19,12 +19,13 @@ interface OfferRideInterface {
         uint256 ride_fee;
         offerRideStatus status;
     }
+    event Message(string message, offerRide _user);
 }
 
 contract OfferRideContract is OfferRideInterface, User {
     mapping(uint256 => offerRide) OfferRideList;
     mapping(address => uint256[]) UserOfferRideList;
-    uint256 internal offerRideId;
+    uint256 public offerRideId;
 
     function addOfferRide(offerRide memory _offerRide)
         public
@@ -55,6 +56,10 @@ contract OfferRideContract is OfferRideInterface, User {
         OfferRideList[offerRideId] = _offerRide;
         UserOfferRideList[msg.sender].push(offerRideId);
         UserList[msg.sender].utype = UserType.Pooler;
+        emit Message(
+            "Added offer ride successfully",
+            OfferRideList[offerRideId]
+        );
         offerRideId++;
     }
 
@@ -101,6 +106,7 @@ contract OfferRideContract is OfferRideInterface, User {
             // return CPT to rider and fine rider
             OfferRideList[_id].status = offerRideStatus.cancel;
         }
+        emit Message("Cancelled offer ride successfully", OfferRideList[_id]);
     }
 
     struct findRide {
