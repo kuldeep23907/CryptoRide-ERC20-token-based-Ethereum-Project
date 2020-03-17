@@ -3,6 +3,7 @@ pragma experimental ABIEncoderV2;
 
 import {CarPoolingToken} from "./CarPoolingToken.sol";
 import "./Vehicle.sol";
+
 interface UserInterface {
     enum UserType {None, Pooler, Rider}
     struct User {
@@ -24,11 +25,13 @@ contract User is UserInterface, CarPoolingToken, Vehicle {
     mapping(address => UserInterface.User) internal UserList;
     mapping(address => bool) internal AddressAvailable;
 
+    // Modifer to check if user is registered
     modifier onlyRegisteredUser() {
         require(AddressAvailable[msg.sender], "You are not registered");
         _;
     }
 
+    // Modifier to check if user is pooler
     modifier onlyPooler() {
         require(
             UserList[msg.sender].utype == UserType.Pooler,
@@ -37,6 +40,7 @@ contract User is UserInterface, CarPoolingToken, Vehicle {
         _;
     }
 
+    // Modifier to check if user is rider
     modifier onlyRider() {
         require(
             UserList[msg.sender].utype == UserType.Rider,
@@ -45,6 +49,7 @@ contract User is UserInterface, CarPoolingToken, Vehicle {
         _;
     }
 
+    // To create a new user
     function store(UserInterface.User memory _user) public override {
         require(!AddressAvailable[msg.sender], "Address not available");
         require(idVerification(_user.adharID), "Id verification failed");
@@ -57,6 +62,7 @@ contract User is UserInterface, CarPoolingToken, Vehicle {
         );
     }
 
+    // To verify aadhar of an user
     function idVerification(uint256 _id) private pure returns (bool) {
         if (_id % 2 == 0) {
             return true;
@@ -64,6 +70,7 @@ contract User is UserInterface, CarPoolingToken, Vehicle {
         return false;
     }
 
+    // To update an user details
     function update(UserInterface.User memory _user)
         public
         onlyRegisteredUser
@@ -78,6 +85,7 @@ contract User is UserInterface, CarPoolingToken, Vehicle {
         );
     }
 
+    // To get user details using user address
     function getUserDetails()
         public
         view
@@ -87,6 +95,7 @@ contract User is UserInterface, CarPoolingToken, Vehicle {
         return UserList[msg.sender];
     }
 
+    // To add vehicle to an user account
     function addVehicle(VehicleInterface.Vehicle memory _vehicle)
         public
         onlyRegisteredUser
@@ -96,6 +105,7 @@ contract User is UserInterface, CarPoolingToken, Vehicle {
         }
     }
 
+    // To get list of vehicles for an user account
     function getUserVehicleList()
         public
         view

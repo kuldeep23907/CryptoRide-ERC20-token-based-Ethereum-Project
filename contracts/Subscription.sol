@@ -27,6 +27,7 @@ contract OfferRideContract is OfferRideInterface, User {
     mapping(address => uint256[]) UserOfferRideList;
     uint256 public offerRideId;
 
+    // To offer a ride by user
     function addOfferRide(offerRide memory _offerRide)
         public
         onlyRegisteredUser
@@ -63,6 +64,7 @@ contract OfferRideContract is OfferRideInterface, User {
         offerRideId++;
     }
 
+    // To get the offered rides accross an user account
     function getOfferRideByUser()
         public
         view
@@ -80,6 +82,7 @@ contract OfferRideContract is OfferRideInterface, User {
         return myOfferRides;
     }
 
+    // To get all offer rides
     function getAllOfferRides() public view returns (offerRide[] memory) {
         offerRide[] memory myOfferRides = new offerRide[](offerRideId);
         for (uint256 i = 0; i < offerRideId; i++) {
@@ -88,6 +91,7 @@ contract OfferRideContract is OfferRideInterface, User {
         return myOfferRides;
     }
 
+    // To cancel any offered ride
     function cancelOfferRide(uint256 _id) public onlyRegisteredUser {
         require(
             OfferRideList[_id].user == msg.sender,
@@ -116,6 +120,7 @@ contract OfferRideContract is OfferRideInterface, User {
         string end_location;
     }
 
+    // To find ride using destination match
     function findRides(findRide memory _finfRide)
         public
         view

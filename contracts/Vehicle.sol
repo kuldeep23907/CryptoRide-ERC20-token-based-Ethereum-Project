@@ -20,6 +20,8 @@ contract Vehicle is VehicleInterface {
     mapping(uint256 => VehicleInterface.Vehicle) internal VehicleList;
     mapping(address => VehicleInterface.Vehicle[]) internal UserVehicleList;
     uint256 private VID = 0;
+
+    // To create a vehicle
     function store(VehicleInterface.Vehicle memory _vehicle)
         internal
         returns (bool)
@@ -36,6 +38,7 @@ contract Vehicle is VehicleInterface {
         return true;
     }
 
+    // To verify vehicle registration number
     function vehicleIdVerification(uint256 _id) private pure returns (bool) {
         if (_id % 2 == 0) {
             return true;
@@ -43,6 +46,7 @@ contract Vehicle is VehicleInterface {
         return false;
     }
 
+    // To get vehicle list
     function getVehicleList()
         internal
         view

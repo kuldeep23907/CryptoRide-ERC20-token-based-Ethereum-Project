@@ -29,6 +29,7 @@ contract BookRideContract is BookRideInterface, OfferRideContract {
     uint256 internal bookRideId;
 
     // for rider
+    // To book a ride
     function addBookRide(bookRide memory _bookRide) public onlyRegisteredUser {
         require(offerRideId >= _bookRide.oid, "No such offer ride exist");
         require(
@@ -75,6 +76,7 @@ contract BookRideContract is BookRideInterface, OfferRideContract {
     //     return BookRideList[bid].status;
     // }
 
+    // To get all rides booked across an account
     function getBookRideByUser()
         public
         view
