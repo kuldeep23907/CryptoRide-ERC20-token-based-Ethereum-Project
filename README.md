@@ -38,7 +38,7 @@ To compile the smart contracts
 truffle compile
 ```
 
-To deploy the contract on blockchain. Before migrating, so ensure that either ganache(local blockchain) is running or select an ethereum testnet(rinkbey etc.) blockchain. To use testnet, make suitable changes in `truffle-config.js` network object.
+To deploy the contract on blockchain. Before migrating, do ensure that either ganache(local blockchain) is running or select an ethereum testnet(rinkbey etc.) blockchain. To use testnet, make suitable changes in `truffle-config.js` network object.
 ```
 truffle migrate
 ```
