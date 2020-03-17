@@ -1,4 +1,8 @@
 const path = require("path");
+var HDWalletProvider = require("truffle-hdwallet-provider");
+require('dotenv').config();
+var mnemonic = process.env.MNEMONIC;
+var apiKey = process.env.API_KEY;
 
 module.exports = {
   // See <http://truffleframework.com/docs/advanced/configuration>
@@ -9,6 +13,15 @@ module.exports = {
       host: "127.0.0.1",
       port: 7545,
       network_id: "*"
+    },
+    rinkeby: {
+      provider: () =>
+        new HDWalletProvider(
+          mnemonic,
+          `https://rinkeby.infura.io/v3/` + apiKey
+        ),
+      network_id: 4,
+      networkCheckTimeout: 10
     },
   },
   compilers: {
